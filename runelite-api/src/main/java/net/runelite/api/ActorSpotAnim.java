@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Abex
+ * Copyright (c) 2023, Adam <Adam@sigterm.info>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,34 +22,57 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.client.externalplugins;
+package net.runelite.api;
 
-import java.lang.invoke.MethodHandles;
-import java.net.URL;
-import java.net.URLClassLoader;
-import lombok.Getter;
-import lombok.Setter;
-import net.runelite.client.util.ReflectUtil;
-
-class ExternalPluginClassLoader extends URLClassLoader implements ReflectUtil.PrivateLookupableClassLoader
+public interface ActorSpotAnim extends Node
 {
-	@Getter
-	private final ExternalPluginManifest manifest;
+	/**
+	 * Get the spotanim id
+	 * @see GraphicID
+	 * @return
+	 */
+	int getId();
 
-	@Getter
-	@Setter
-	private MethodHandles.Lookup lookup;
+	/**
+	 * Set the spotanim id
+	 * @see GraphicID
+	 * @param id
+	 */
+	void setId(int id);
 
-	ExternalPluginClassLoader(ExternalPluginManifest manifest, URL[] urls)
-	{
-		super(urls, ExternalPluginClassLoader.class.getClassLoader());
-		this.manifest = manifest;
-		ReflectUtil.installLookupHelper(this);
-	}
+	/**
+	 * Get the spotanim height
+	 * @return
+	 */
+	int getHeight();
 
-	@Override
-	public Class<?> defineClass0(String name, byte[] b, int off, int len) throws ClassFormatError
-	{
-		return super.defineClass(name, b, off, len);
-	}
+	/**
+	 * Set the spotanim height
+	 * @param height
+	 */
+	void setHeight(int height);
+
+	/**
+	 * Get the spotanim frame
+	 * @return
+	 */
+	int getFrame();
+
+	/**
+	 * Set the spotanim frame
+	 * @param frame
+	 */
+	void setFrame(int frame);
+
+	/**
+	 * Get the frame cycle. The number of ticks the client has been on this frame.
+	 * @return
+	 */
+	int getCycle();
+
+	/**
+	 * Set the frame cycle.
+	 * @param cycle
+	 */
+	void setCycle(int cycle);
 }
